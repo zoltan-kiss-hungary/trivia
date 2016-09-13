@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Game::Game() : currentPlayer(0), places({}), purses({}){
+Game::Game() : currentPlayer(0), places(), purses(){
 	for (int i = 0; i < 50; i++)
 	{
 
