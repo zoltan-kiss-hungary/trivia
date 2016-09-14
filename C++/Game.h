@@ -10,11 +10,14 @@ class PlayerList {
 private:
 	int currentPlayer;
 	vector<string> playernames;
+	vector<unsigned> places;
 public:
 	PlayerList();
 	string currentPlayerName();
 	unsigned currentPlayerId();
-	void bumpPlayer();
+	unsigned currentPlayerPlace();
+	void bumpCurrentPlayer();
+	void moveCurrentPlayerPlace(unsigned);
 	void push_back(const string &);
 	unsigned size(void) const;
 };
@@ -24,7 +27,6 @@ class Game{
 private:
 
 	PlayerList players;
-	int places[6];
 	int purses[6];
 
 	bool inPenaltyBox[6];

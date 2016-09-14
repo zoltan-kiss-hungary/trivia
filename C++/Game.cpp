@@ -8,11 +8,19 @@ using namespace std;
 
 PlayerList::PlayerList() : currentPlayer(0) {}
 
-void PlayerList::bumpPlayer()
+void PlayerList::bumpCurrentPlayer()
 {
 	currentPlayer++;
 	if (currentPlayer == playernames.size())
 		currentPlayer = 0;
+}
+
+void PlayerList::moveCurrentPlayerPlace(unsigned roll)
+{
+	places[currentPlayer] += roll;
+	if (places[currentPlayer] > 11)
+		places[currentPlayer] = places[currentPlayer] - 12;
+
 }
 
 string PlayerList::currentPlayerName()
@@ -25,9 +33,15 @@ unsigned PlayerList::currentPlayerId()
 	return currentPlayer;
 }
 
+unsigned PlayerList::currentPlayerPlace()
+{
+	return places[currentPlayer];
+}
+
 void PlayerList::push_back(const string &val)
 {
 	playernames.push_back(val);
+	places.push_back(0);
 }
 
 unsigned PlayerList::size(void) const
@@ -35,7 +49,7 @@ unsigned PlayerList::size(void) const
 	return playernames.size();
 }
 
-Game::Game() : places(), purses(), isGettingOutOfPenaltyBox(false) {
+Game::Game() : purses(), isGettingOutOfPenaltyBox(false) {
 	for (int i = 0; i < 50; i++) {
 		addQuestion(popQuestions, "Pop Question ", i);
 		addQuestion(scienceQuestions, "Science Question ", i);
@@ -58,7 +72,6 @@ bool Game::isPlayable()
 
 bool Game::add(string playerName){
 	players.push_back(playerName);
-	places[howManyPlayers()] = 0;
 	purses[howManyPlayers()] = 0;
 	inPenaltyBox[howManyPlayers()] = false;
 
@@ -84,10 +97,9 @@ void Game::roll(int roll)
 			isGettingOutOfPenaltyBox = true;
 
 			cout << players.currentPlayerName() << " is getting out of the penalty box" << endl;
-			places[players.currentPlayerId()] = places[players.currentPlayerId()] + roll;
-			if (places[players.currentPlayerId()] > 11) places[players.currentPlayerId()] = places[players.currentPlayerId()] - 12;
+			players.moveCurrentPlayerPlace(roll);
 
-			cout << players.currentPlayerName() << "'s new location is " << places[players.currentPlayerId()] << endl;
+			cout << players.currentPlayerName() << "'s new location is " << players.currentPlayerPlace() << endl;
 			cout << "The category is " << currentCategory() << endl;
 			askQuestion();
 		}
@@ -101,10 +113,9 @@ void Game::roll(int roll)
 	else
 	{
 
-		places[players.currentPlayerId()] = places[players.currentPlayerId()] + roll;
-		if (places[players.currentPlayerId()] > 11) places[players.currentPlayerId()] = places[players.currentPlayerId()] - 12;
+		players.moveCurrentPlayerPlace(roll);
 
-		cout << players.currentPlayerName() << "'s new location is " << places[players.currentPlayerId()] << endl;
+		cout << players.currentPlayerName() << "'s new location is " << players.currentPlayerPlace() << endl;
 		cout << "The category is " << currentCategory() << endl;
 		askQuestion();
 	}
@@ -138,7 +149,7 @@ void Game::askQuestion()
 
 string Game::currentCategory()
 {
-	switch (places[players.currentPlayerId()]) {
+	switch (players.currentPlayerPlace()) {
 		case 0 : return "Pop";
 		case 4 : return "Pop";
 		case 8 : return "Pop";
@@ -166,13 +177,13 @@ bool Game::wasCorrectlyAnswered()
 				<<  " Gold Coins." << endl;
 
 			bool winner = didPlayerWin();
-			players.bumpPlayer();
+			players.bumpCurrentPlayer();
 
 			return winner;
 		}
 		else
 		{
-			players.bumpPlayer();
+			players.bumpCurrentPlayer();
 			return true;
 		}
 
@@ -190,7 +201,7 @@ bool Game::wasCorrectlyAnswered()
 			<< " Gold Coins." << endl;
 
 		bool winner = didPlayerWin();
-		players.bumpPlayer();
+		players.bumpCurrentPlayer();
 
 		return winner;
 	}
@@ -202,7 +213,7 @@ bool Game::wrongAnswer()
 	cout << players.currentPlayerName() + " was sent to the penalty box" << endl;
 	inPenaltyBox[players.currentPlayerId()] = true;
 
-	players.bumpPlayer();
+	players.bumpCurrentPlayer();
 	return true;
 }
 
