@@ -150,15 +150,17 @@ void Game::askQuestion()
 
 string Game::currentCategory()
 {
-	if (places[players.currentPlayerId()] == 0) return "Pop";
-	if (places[players.currentPlayerId()] == 4) return "Pop";
-	if (places[players.currentPlayerId()] == 8) return "Pop";
-	if (places[players.currentPlayerId()] == 1) return "Science";
-	if (places[players.currentPlayerId()] == 5) return "Science";
-	if (places[players.currentPlayerId()] == 9) return "Science";
-	if (places[players.currentPlayerId()] == 2) return "Sports";
-	if (places[players.currentPlayerId()] == 6) return "Sports";
-	if (places[players.currentPlayerId()] == 10) return "Sports";
+	switch (places[players.currentPlayerId()]) {
+		case 0 : return "Pop";
+		case 4 : return "Pop";
+		case 8 : return "Pop";
+		case 1 : return "Science";
+		case 5 : return "Science";
+		case 9 : return "Science";
+		case 2 : return "Sports";
+		case 6 : return "Sports";
+		case 10 : return "Sports";
+	}
 	return "Rock";
 }
 
