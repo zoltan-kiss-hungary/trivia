@@ -35,10 +35,9 @@ private:
 	list<string> rockQuestions;
 
 	bool isGettingOutOfPenaltyBox;
-
+	void addQuestion(list<string> &questionlist, string text, int i);
 public:
 	Game();
-	string createRockQuestion(int index);
 	bool isPlayable();
 	bool add(string playerName);
 

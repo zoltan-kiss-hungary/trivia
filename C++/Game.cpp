@@ -35,32 +35,20 @@ unsigned PlayerList::size(void) const
 	return playernames.size();
 }
 
-Game::Game() : places(), purses(){
-	for (int i = 0; i < 50; i++)
-	{
-
-		ostringstream oss (ostringstream::out);
-		oss << "Pop Question " << i;
-
-		popQuestions.push_back(oss.str());
-
-		char str[255];
-		sprintf(str, "Science Question %d", i);
-		scienceQuestions.push_back(str);
-
-		char str1[255];
-		sprintf(str1, "Sports Question %d", i);
-		sportsQuestions.push_back(str1);
-
-		rockQuestions.push_back(createRockQuestion(i));
+Game::Game() : places(), purses(), isGettingOutOfPenaltyBox(false) {
+	for (int i = 0; i < 50; i++) {
+		addQuestion(popQuestions, "Pop Question ", i);
+		addQuestion(scienceQuestions, "Science Question ", i);
+		addQuestion(sportsQuestions, "Sports Question ", i);
+		addQuestion(rockQuestions, "Rock Question ", i);
 	}
 }
 
-string Game::createRockQuestion(int index)
+void Game::addQuestion(list<string> &questionlist, string text, int i)
 {
-	char indexStr[127];
-	sprintf(indexStr, "Rock Question %d", index);
-	return indexStr;
+	ostringstream question (ostringstream::out);
+	question << text << i;
+	questionlist.push_back(question.str());
 }
 
 bool Game::isPlayable()
