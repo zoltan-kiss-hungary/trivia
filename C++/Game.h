@@ -6,11 +6,24 @@
 #include <vector>
 using namespace std;
 
+class PlayerList {
+private:
+	int currentPlayer;
+	vector<string> playernames;
+public:
+	PlayerList();
+	string currentPlayerName();
+	unsigned currentPlayerId();
+	void bumpPlayer();
+	void push_back(const string &);
+	unsigned size(void) const;
+};
+
 class Game{
 
 private:
-	vector<string> players;
 
+	PlayerList players;
 	int places[6];
 	int purses[6];
 
@@ -21,7 +34,6 @@ private:
 	list<string> sportsQuestions;
 	list<string> rockQuestions;
 
-	int currentPlayer;
 	bool isGettingOutOfPenaltyBox;
 
 public:
