@@ -22,7 +22,8 @@ public:
 	bool currentPlayerInPenaltyBox();
 	void bumpCurrentPlayer();
 	void moveCurrentPlayerPlace(unsigned);
-	void bumpCurrentPlayerCoin();
+	/* returns whether the player won or not */
+	bool bumpCurrentPlayerCoin();
 	void penaltyForCurrentPlayer();
 	void push_back(const string &);
 	unsigned size(void) const;
@@ -50,6 +51,7 @@ public:
 	int howManyPlayers();
 	void roll(int roll);
 
+	/* returns whether the player won or not */
 	bool correctAnswer();
 	bool wrongAnswer();
 

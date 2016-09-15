@@ -1,7 +1,7 @@
 ﻿#include <stdlib.h>
 #include "Game.h"
 
-static bool notAWinner;
+static bool winner;
 
 int main()
 {
@@ -18,12 +18,12 @@ int main()
 
 		if (rand() % 9 == 7)
 		{
-			notAWinner = aGame.wrongAnswer();
+			winner = aGame.wrongAnswer();
 		}
 		else
 		{
-			notAWinner = aGame.wasCorrectlyAnswered();
+			winner = aGame.correctAnswer();
 		}
-	} while (notAWinner);
+	} while (!winner);
 
 }

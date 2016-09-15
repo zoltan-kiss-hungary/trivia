@@ -15,9 +15,10 @@ void PlayerList::bumpCurrentPlayer()
 		currentPlayer = 0;
 }
 
-void PlayerList::bumpCurrentPlayerCoin()
+ bool PlayerList::bumpCurrentPlayerCoin()
 {
 	purses[currentPlayer]++;
+	return didPlayerWin();
 }
 
 void PlayerList::moveCurrentPlayerPlace(unsigned roll)
@@ -187,14 +188,13 @@ bool Game::correctAnswer()
 {
 	if (players.currentPlayerInPenaltyBox() && !isGettingOutOfPenaltyBox) {
 		players.bumpCurrentPlayer();
-		return true;
+		return false;
 	}
-	players.bumpCurrentPlayerCoin();
 	cout << "Answer was correct!!!!" << endl;
 	cout << players.currentPlayerName() << " now has "
 		<< players.currentPlayerCoin() << " Gold Coins." << endl;
 
-	bool winner = players.didPlayerWin();
+	bool winner = players.bumpCurrentPlayerCoin();
 	players.bumpCurrentPlayer();
 	return winner;
 }
@@ -206,11 +206,11 @@ bool Game::wrongAnswer()
 	players.penaltyForCurrentPlayer();
 
 	players.bumpCurrentPlayer();
-	return true;
+	return false;
 }
 
 
 bool PlayerList::didPlayerWin()
 {
-	return !(purses[currentPlayer] == 6);
+	return purses[currentPlayer] == 6;
 }
