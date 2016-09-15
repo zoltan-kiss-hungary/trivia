@@ -183,36 +183,12 @@ string Game::currentCategory()
 	return "Rock";
 }
 
-bool Game::wasCorrectlyAnswered()
+bool Game::correctAnswer()
 {
-	if (players.currentPlayerInPenaltyBox())
-	{
-		if (isGettingOutOfPenaltyBox)
-		{
-			cout << "Answer was correct!!!!" << endl;
-			players.bumpCurrentPlayerCoin();
-			cout << players.currentPlayerName()
-			     << " now has "
-			     << players.currentPlayerCoin()
-				<<  " Gold Coins." << endl;
-
-			bool winner = players.didPlayerWin();
-			players.bumpCurrentPlayer();
-
-			return winner;
-		}
-		else
-		{
-			players.bumpCurrentPlayer();
-			return true;
-		}
-
-
-
+	if (players.currentPlayerInPenaltyBox() && !isGettingOutOfPenaltyBox) {
+		players.bumpCurrentPlayer();
+		return true;
 	}
-	else
-	{
-
 		cout << "Answer was corrent!!!!" << endl;
 		players.bumpCurrentPlayerCoin();
 		cout << players.currentPlayerName()
@@ -224,7 +200,6 @@ bool Game::wasCorrectlyAnswered()
 		players.bumpCurrentPlayer();
 
 		return winner;
-	}
 }
 
 bool Game::wrongAnswer()

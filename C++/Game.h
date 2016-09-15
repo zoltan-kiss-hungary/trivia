@@ -50,7 +50,7 @@ public:
 	int howManyPlayers();
 	void roll(int roll);
 
-	bool wasCorrectlyAnswered();
+	bool correctAnswer();
 	bool wrongAnswer();
 
 private:
