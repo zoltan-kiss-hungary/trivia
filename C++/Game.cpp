@@ -189,17 +189,14 @@ bool Game::correctAnswer()
 		players.bumpCurrentPlayer();
 		return true;
 	}
-		cout << "Answer was corrent!!!!" << endl;
-		players.bumpCurrentPlayerCoin();
-		cout << players.currentPlayerName()
-				<< " now has "
-				<< players.currentPlayerCoin()
-			<< " Gold Coins." << endl;
+	players.bumpCurrentPlayerCoin();
+	cout << "Answer was correct!!!!" << endl;
+	cout << players.currentPlayerName() << " now has "
+		<< players.currentPlayerCoin() << " Gold Coins." << endl;
 
-		bool winner = players.didPlayerWin();
-		players.bumpCurrentPlayer();
-
-		return winner;
+	bool winner = players.didPlayerWin();
+	players.bumpCurrentPlayer();
+	return winner;
 }
 
 bool Game::wrongAnswer()
