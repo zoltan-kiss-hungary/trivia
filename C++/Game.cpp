@@ -28,6 +28,11 @@ void PlayerList::moveCurrentPlayerPlace(unsigned roll)
 
 }
 
+void PlayerList::penaltyForCurrentPlayer()
+{
+	inPenaltyBox[currentPlayer] = true;
+}
+
 string PlayerList::currentPlayerName()
 {
 	return playernames[currentPlayer];
@@ -48,11 +53,17 @@ unsigned PlayerList::currentPlayerCoin()
 	return purses[currentPlayer];
 }
 
+bool PlayerList::currentPlayerInPenaltyBox()
+{
+	return inPenaltyBox[currentPlayer];
+}
+
 void PlayerList::push_back(const string &val)
 {
 	playernames.push_back(val);
 	places.push_back(0);
 	purses.push_back(0);
+	inPenaltyBox.push_back(false);
 }
 
 unsigned PlayerList::size(void) const
@@ -83,7 +94,6 @@ bool Game::isPlayable()
 
 bool Game::add(string playerName){
 	players.push_back(playerName);
-	inPenaltyBox[howManyPlayers()] = false;
 
 	cout << playerName << " was added" << endl;
 	cout << "They are player number " << players.size() << endl;
@@ -100,7 +110,7 @@ void Game::roll(int roll)
 	cout << players.currentPlayerName() << " is the current player" << endl;
 	cout << "They have rolled a " << roll << endl;
 
-	if (inPenaltyBox[players.currentPlayerId()])
+	if (players.currentPlayerInPenaltyBox())
 	{
 		if (roll % 2 != 0)
 		{
@@ -175,7 +185,7 @@ string Game::currentCategory()
 
 bool Game::wasCorrectlyAnswered()
 {
-	if (inPenaltyBox[players.currentPlayerId()])
+	if (players.currentPlayerInPenaltyBox())
 	{
 		if (isGettingOutOfPenaltyBox)
 		{
@@ -221,7 +231,7 @@ bool Game::wrongAnswer()
 {
 	cout << "Question was incorrectly answered" << endl;
 	cout << players.currentPlayerName() + " was sent to the penalty box" << endl;
-	inPenaltyBox[players.currentPlayerId()] = true;
+	players.penaltyForCurrentPlayer();
 
 	players.bumpCurrentPlayer();
 	return true;

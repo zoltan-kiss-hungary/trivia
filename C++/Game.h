@@ -12,15 +12,18 @@ private:
 	vector<string> playernames;
 	vector<unsigned> places;
 	vector<unsigned> purses;
+	vector<bool> inPenaltyBox;
 public:
 	PlayerList();
 	string currentPlayerName();
 	unsigned currentPlayerId();
 	unsigned currentPlayerPlace();
 	unsigned currentPlayerCoin();
+	bool currentPlayerInPenaltyBox();
 	void bumpCurrentPlayer();
 	void moveCurrentPlayerPlace(unsigned);
 	void bumpCurrentPlayerCoin();
+	void penaltyForCurrentPlayer();
 	void push_back(const string &);
 	unsigned size(void) const;
 	bool didPlayerWin();
@@ -31,8 +34,6 @@ class Game{
 private:
 
 	PlayerList players;
-
-	bool inPenaltyBox[6];
 
 	list<string> popQuestions;
 	list<string> scienceQuestions;
