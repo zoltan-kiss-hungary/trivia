@@ -15,6 +15,11 @@ void PlayerList::bumpCurrentPlayer()
 		currentPlayer = 0;
 }
 
+void PlayerList::bumpCurrentPlayerCoin()
+{
+	purses[currentPlayer]++;
+}
+
 void PlayerList::moveCurrentPlayerPlace(unsigned roll)
 {
 	places[currentPlayer] += roll;
@@ -38,10 +43,16 @@ unsigned PlayerList::currentPlayerPlace()
 	return places[currentPlayer];
 }
 
+unsigned PlayerList::currentPlayerCoin()
+{
+	return purses[currentPlayer];
+}
+
 void PlayerList::push_back(const string &val)
 {
 	playernames.push_back(val);
 	places.push_back(0);
+	purses.push_back(0);
 }
 
 unsigned PlayerList::size(void) const
@@ -49,7 +60,7 @@ unsigned PlayerList::size(void) const
 	return playernames.size();
 }
 
-Game::Game() : purses(), isGettingOutOfPenaltyBox(false) {
+Game::Game() : isGettingOutOfPenaltyBox(false) {
 	for (int i = 0; i < 50; i++) {
 		addQuestion(popQuestions, "Pop Question ", i);
 		addQuestion(scienceQuestions, "Science Question ", i);
@@ -72,7 +83,6 @@ bool Game::isPlayable()
 
 bool Game::add(string playerName){
 	players.push_back(playerName);
-	purses[howManyPlayers()] = 0;
 	inPenaltyBox[howManyPlayers()] = false;
 
 	cout << playerName << " was added" << endl;
@@ -170,13 +180,13 @@ bool Game::wasCorrectlyAnswered()
 		if (isGettingOutOfPenaltyBox)
 		{
 			cout << "Answer was correct!!!!" << endl;
-			purses[players.currentPlayerId()]++;
+			players.bumpCurrentPlayerCoin();
 			cout << players.currentPlayerName()
 			     << " now has "
-			     << purses[players.currentPlayerId()]
+			     << players.currentPlayerCoin()
 				<<  " Gold Coins." << endl;
 
-			bool winner = didPlayerWin();
+			bool winner = players.didPlayerWin();
 			players.bumpCurrentPlayer();
 
 			return winner;
@@ -194,13 +204,13 @@ bool Game::wasCorrectlyAnswered()
 	{
 
 		cout << "Answer was corrent!!!!" << endl;
-		purses[players.currentPlayerId()]++;
+		players.bumpCurrentPlayerCoin();
 		cout << players.currentPlayerName()
 				<< " now has "
-				<< purses[players.currentPlayerId()]
+				<< players.currentPlayerCoin()
 			<< " Gold Coins." << endl;
 
-		bool winner = didPlayerWin();
+		bool winner = players.didPlayerWin();
 		players.bumpCurrentPlayer();
 
 		return winner;
@@ -218,7 +228,7 @@ bool Game::wrongAnswer()
 }
 
 
-bool Game::didPlayerWin()
+bool PlayerList::didPlayerWin()
 {
-	return !(purses[players.currentPlayerId()] == 6);
+	return !(purses[currentPlayer] == 6);
 }

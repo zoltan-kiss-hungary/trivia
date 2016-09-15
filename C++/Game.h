@@ -11,15 +11,19 @@ private:
 	int currentPlayer;
 	vector<string> playernames;
 	vector<unsigned> places;
+	vector<unsigned> purses;
 public:
 	PlayerList();
 	string currentPlayerName();
 	unsigned currentPlayerId();
 	unsigned currentPlayerPlace();
+	unsigned currentPlayerCoin();
 	void bumpCurrentPlayer();
 	void moveCurrentPlayerPlace(unsigned);
+	void bumpCurrentPlayerCoin();
 	void push_back(const string &);
 	unsigned size(void) const;
+	bool didPlayerWin();
 };
 
 class Game{
@@ -27,7 +31,6 @@ class Game{
 private:
 
 	PlayerList players;
-	int purses[6];
 
 	bool inPenaltyBox[6];
 
@@ -52,8 +55,6 @@ public:
 private:
 	void askQuestion();
 	string currentCategory();
-
-	bool didPlayerWin();
 };
 
 #endif /* GAME_H_ */
