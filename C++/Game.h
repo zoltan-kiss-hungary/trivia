@@ -8,7 +8,7 @@ using namespace std;
 
 class PlayerList {
 private:
-	int currentPlayer;
+	unsigned currentPlayer;
 	vector<string> playernames;
 	vector<unsigned> places;
 	vector<unsigned> purses;
