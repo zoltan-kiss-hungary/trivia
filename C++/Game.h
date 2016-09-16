@@ -41,21 +41,27 @@ private:
 	list<string> rockQuestions;
 
 	void addQuestion(list<string> &questionlist, string text, int i);
-public:
-	Game();
-	bool isPlayable();
-	void add(string playerName);
-
-	int howManyPlayers();
-	bool roll(int roll)
-
-	/* returns whether the player won or not */
-	bool correctAnswer();
-	bool wrongAnswer();
-
-private:
 	void askQuestion();
 	string currentCategory();
+public:
+	/* Init the game with 50 questions in each of the 4 categories */
+	Game();
+	/* Check if we have at least 2 players in game */
+	bool isPlayable();
+	/* Add a player to the game with 'playerName'. Name duplication is
+	 * allowed */
+	void add(string playerName);
+	/* Query how many players we have */
+	int howManyPlayers();
+	/* Check for penalty status and move the player if possible, then ask the
+	 * question. Returns whether the player is in penalty or not. */
+	bool roll(int roll)
+
+	/* Call these after the player answered. depending on whether their answer
+	 * was right or wrong. They return whether the player won or not. Don't
+	 * call them if player is in penalty. */
+	bool correctAnswer();
+	bool wrongAnswer();
 };
 
 #endif /* GAME_H_ */
