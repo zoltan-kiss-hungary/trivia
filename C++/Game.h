@@ -46,7 +46,7 @@ private:
 public:
 	Game();
 	bool isPlayable();
-	bool add(string playerName);
+	void add(string playerName);
 
 	int howManyPlayers();
 	void roll(int roll);

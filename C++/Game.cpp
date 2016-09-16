@@ -93,12 +93,11 @@ bool Game::isPlayable()
 	return (howManyPlayers() >= 2);
 }
 
-bool Game::add(string playerName){
+void Game::add(string playerName){
 	players.push_back(playerName);
 
 	cout << playerName << " was added" << endl;
 	cout << "They are player number " << players.size() << endl;
-	return true;
 }
 
 int Game::howManyPlayers()
