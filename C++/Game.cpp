@@ -29,11 +29,15 @@ void PlayerList::moveCurrentPlayerPlace(unsigned roll)
 
 }
 
-void PlayerList::penaltyForCurrentPlayer()
+void PlayerList::setPenaltyCurrentPlayer()
 {
 	inPenaltyBox[currentPlayer] = true;
 }
 
+void PlayerList::clearPenaltyCurrentPlayer()
+{
+	inPenaltyBox[currentPlayer] = false;
+}
 string PlayerList::currentPlayerName()
 {
 	return playernames[currentPlayer];
@@ -72,7 +76,7 @@ unsigned PlayerList::size(void) const
 	return playernames.size();
 }
 
-Game::Game() : isGettingOutOfPenaltyBox(false) {
+Game::Game() {
 	for (int i = 0; i < 50; i++) {
 		addQuestion(popQuestions, "Pop Question ", i);
 		addQuestion(scienceQuestions, "Science Question ", i);
@@ -105,7 +109,7 @@ int Game::howManyPlayers()
 	return players.size();
 }
 
-void Game::roll(int roll)
+bool Game::roll(int roll)
 {
 	cout << players.currentPlayerName() << " is the current player" << endl;
 	cout << "They have rolled a " << roll << endl;
@@ -115,10 +119,10 @@ void Game::roll(int roll)
 		if (roll % 2 == 0)
 		{
 			cout << players.currentPlayerName() << " is not getting out of the penalty box" << endl;
-			isGettingOutOfPenaltyBox = false;
-			return;
+			players.bumpCurrentPlayer();
+			return false;
 		}
-		isGettingOutOfPenaltyBox = true;
+		players.clearPenaltyCurrentPlayer();
 
 		cout << players.currentPlayerName() << " is getting out of the penalty box" << endl;
 	}
@@ -127,6 +131,7 @@ void Game::roll(int roll)
 	cout << players.currentPlayerName() << "'s new location is " << players.currentPlayerPlace() << endl;
 	cout << "The category is " << currentCategory() << endl;
 	askQuestion();
+	return true;
 }
 
 void Game::askQuestion()
@@ -172,10 +177,6 @@ string Game::currentCategory()
 
 bool Game::correctAnswer()
 {
-	if (players.currentPlayerInPenaltyBox() && !isGettingOutOfPenaltyBox) {
-		players.bumpCurrentPlayer();
-		return false;
-	}
 	cout << "Answer was correct!!!!" << endl;
 	cout << players.currentPlayerName() << " now has "
 		<< players.currentPlayerCoin() << " Gold Coins." << endl;
@@ -189,7 +190,7 @@ bool Game::wrongAnswer()
 {
 	cout << "Question was incorrectly answered" << endl;
 	cout << players.currentPlayerName() + " was sent to the penalty box" << endl;
-	players.penaltyForCurrentPlayer();
+	players.setPenaltyCurrentPlayer();
 
 	players.bumpCurrentPlayer();
 	return false;

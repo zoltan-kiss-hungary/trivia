@@ -24,16 +24,15 @@ public:
 	void moveCurrentPlayerPlace(unsigned);
 	/* returns whether the player won or not */
 	bool bumpCurrentPlayerCoin();
-	void penaltyForCurrentPlayer();
+	void clearPenaltyCurrentPlayer();
+	void setPenaltyCurrentPlayer();
 	void push_back(const string &);
 	unsigned size(void) const;
 	bool didPlayerWin();
 };
 
 class Game{
-
 private:
-
 	PlayerList players;
 
 	list<string> popQuestions;
@@ -41,7 +40,6 @@ private:
 	list<string> sportsQuestions;
 	list<string> rockQuestions;
 
-	bool isGettingOutOfPenaltyBox;
 	void addQuestion(list<string> &questionlist, string text, int i);
 public:
 	Game();
@@ -49,7 +47,7 @@ public:
 	void add(string playerName);
 
 	int howManyPlayers();
-	void roll(int roll);
+	bool roll(int roll)
 
 	/* returns whether the player won or not */
 	bool correctAnswer();

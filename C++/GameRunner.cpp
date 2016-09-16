@@ -1,7 +1,7 @@
 ﻿#include <stdlib.h>
 #include "Game.h"
 
-static bool winner;
+static bool winner = false;
 
 int main()
 {
@@ -13,8 +13,8 @@ int main()
 
 	do
 	{
-
-		aGame.roll(rand() % 5 + 1);
+		if (!aGame.roll(rand() % 5 + 1))
+			continue;
 
 		if (rand() % 9 == 7)
 		{
