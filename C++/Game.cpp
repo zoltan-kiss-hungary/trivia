@@ -118,16 +118,15 @@ void Game::roll(int roll)
 			isGettingOutOfPenaltyBox = false;
 			return;
 		}
-			isGettingOutOfPenaltyBox = true;
+		isGettingOutOfPenaltyBox = true;
 
-			cout << players.currentPlayerName() << " is getting out of the penalty box" << endl;
+		cout << players.currentPlayerName() << " is getting out of the penalty box" << endl;
 	}
-		players.moveCurrentPlayerPlace(roll);
+	players.moveCurrentPlayerPlace(roll);
 
-		cout << players.currentPlayerName() << "'s new location is " << players.currentPlayerPlace() << endl;
-		cout << "The category is " << currentCategory() << endl;
-		askQuestion();
-
+	cout << players.currentPlayerName() << "'s new location is " << players.currentPlayerPlace() << endl;
+	cout << "The category is " << currentCategory() << endl;
+	askQuestion();
 }
 
 void Game::askQuestion()
